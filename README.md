@@ -20,13 +20,19 @@ pip install -r tools/requirements.txt
 
 The only required packages today are `requests` and `beautifulsoup4`.
 
+### Troubleshooting dependency installation
+
+- **`pip` cannot reach PyPI (e.g. 403/407 errors)** – your network may be behind a proxy. Re-run the install with your proxy settings, for example `pip install --proxy http://USER:PASSWORD@HOST:PORT -r tools/requirements.txt`.
+- **Corporate firewalls that block PyPI entirely** – download the wheels from another network and copy them into this repository, then run `pip install --no-index --find-links ./wheelhouse -r tools/requirements.txt`.
+- **Virtual environment already exists** – remove the `.venv` folder (`rm -rf .venv`) and recreate it if activation fails.
+
 ## 2. Collect GRRR filings
 
-Execute the CLI with your own SEC-compliant User-Agent string (the SEC expects a contact name and email):
+Execute the CLI with your own SEC-compliant User-Agent string (the SEC expects a contact name and email). The SEC generally prefers ASCII characters, so provide your name in romaji (roman letters). The example below uses the contact email you shared (`junya20061227@gmail.com`):
 
 ```bash
 python -m tools.grrr_tool.cli --limit 40 --save-json \
-  --user-agent "Your Name you@example.com"
+  --user-agent "Junya YourSurname junya20061227@gmail.com"
 ```
 
 Key flags:
@@ -78,13 +84,19 @@ pip install -r tools/requirements.txt
 
 現在必要なのは `requests` と `beautifulsoup4` だけです。
 
+#### インストールでエラーになる場合
+
+- **PyPI にアクセスできず 403 や 407 が表示される**: プロキシ経由が必要な可能性があります。`pip install --proxy http://USER:PASSWORD@HOST:PORT -r tools/requirements.txt` のようにプロキシ設定を指定してください。
+- **社内ネットワークで PyPI への通信が遮断されている**: 別ネットワークでホイールファイルを取得し、リポジトリ内にコピーしてから `pip install --no-index --find-links ./wheelhouse -r tools/requirements.txt` を実行します。
+- **仮想環境のアクティベートに失敗する**: `.venv` フォルダを削除して (`rm -rf .venv`)、再度仮想環境を作り直してください。
+
 ### 2. GRRR の提出書類を取得する
 
-SEC が推奨するユーザーエージェント文字列（氏名と連絡先メールアドレスを含む）を指定して CLI を実行します。
+SEC が推奨するユーザーエージェント文字列（氏名と連絡先メールアドレスを含む）を指定して CLI を実行します。SEC では ASCII 文字の利用が推奨されるため、氏名はローマ字で入力してください。以下の例では、共有いただいたメールアドレス `junya20061227@gmail.com` を使用しています。
 
 ```bash
 python -m tools.grrr_tool.cli --limit 40 --save-json \
-  --user-agent "あなたの名前 your@example.com"
+  --user-agent "Junya あなたの苗字 junya20061227@gmail.com"
 ```
 
 主なオプション:

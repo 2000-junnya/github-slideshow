@@ -26,8 +26,8 @@ SUBMISSIONS_SAMPLE_PATH = SAMPLES_DIR / "submissions_grrr.json"
 class UserAgent:
     """User-Agent header values recommended by the SEC."""
 
-    name: str = "github-slideshow-grrr-ingestor"
-    email: str = "example@example.com"
+    name: str = "Junya"
+    email: str = "junya20061227@gmail.com"
 
     def as_header(self) -> str:
         return f"{self.name} {self.email}"

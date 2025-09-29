@@ -13,11 +13,13 @@ source .venv/bin/activate
 pip install -r tools/requirements.txt
 ```
 
+If `pip` reports proxy or 403 errors, configure your proxy (`pip install --proxy http://USER:PASSWORD@HOST:PORT -r tools/requirements.txt`) or download the wheels on another network and install them with `pip install --no-index --find-links ./wheelhouse -r tools/requirements.txt`.
+
 ## Usage
 
 ```bash
 python -m tools.grrr_tool.cli --limit 40 --save-json --download \
-  --user-agent "Your Name you@example.com"
+  --user-agent "Junya YourSurname junya20061227@gmail.com"
 ```
 
 The command performs the following steps:
@@ -33,6 +35,8 @@ The command performs the following steps:
 
 Each request is issued with an SEC-compliant User-Agent header—remember to pass
 an accurate contact string via `--user-agent` when running the tool yourself.
+The SEC documentation prefers ASCII characters, so provide your name in romaji
+(roman letters) rather than kanji.
 
 ## Outputs
 
