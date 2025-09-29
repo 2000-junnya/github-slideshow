@@ -1,0 +1,38 @@
+{
+  "filings": {
+    "recent": {
+      "accessionNumber": [
+        "0001908462-24-000001",
+        "0001908462-23-000045"
+      ],
+      "form": [
+        "6-K",
+        "20-F"
+      ],
+      "filingDate": [
+        "2024-03-15",
+        "2023-04-28"
+      ],
+      "reportDate": [
+        "2024-03-15",
+        "2022-12-31"
+      ],
+      "filmNumber": [
+        "23634567",
+        "23987654"
+      ],
+      "items": [
+        "",
+        ""
+      ],
+      "primaryDocument": [
+        "grrr-6k_20240315.htm",
+        "grrr-20f_20230428.htm"
+      ],
+      "primaryDocDescription": [
+        "Report of Foreign Issuer",
+        "Annual Report"
+      ]
+    }
+  }
+}
