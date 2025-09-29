@@ -1,13 +1,61 @@
-# Your GitHub Learning Lab Repository for Introducing GitHub
+# GRRR Filing Research Toolkit
 
-Welcome to **your** repository for your GitHub Learning Lab course. This repository will be used during the different activities that I will be guiding you through. See a word you don't understand? We've included an emoji 📖 next to some key terms. Click on it to see its definition.
+This repository contains a small command-line utility that collects recent SEC filings and earnings-call announcements for Gorilla Technology Group (ticker **GRRR**). The tool is a first step toward the personal investment workflow documented in [`docs/investment-tool-plan.md`](docs/investment-tool-plan.md).
 
-Oh! I haven't introduced myself...
+## Prerequisites
 
-I'm the GitHub Learning Lab bot and I'm here to help guide you in your journey to learn and master the various topics covered in this course. I will be using Issue and Pull Request comments to communicate with you. In fact, I already added an issue for you to check out.
+- Python 3.10 or later
+- `pip`
+- (Recommended) a Python virtual environment so the dependencies stay isolated
 
-![issue tab](https://lab.github.com/public/images/issue_tab.png)
+## 1. Install dependencies
 
-I'll meet you over there, can't wait to get started!
+From the repository root run:
 
-This course is using the :sparkles: open source project [reveal.js](https://github.com/hakimel/reveal.js/). In some cases we’ve made changes to the history so it would behave during class, so head to the original project repo to learn more about the cool people behind this project.
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -r tools/requirements.txt
+```
+
+The only required packages today are `requests` and `beautifulsoup4`.
+
+## 2. Collect GRRR filings
+
+Execute the CLI with your own SEC-compliant User-Agent string (the SEC expects a contact name and email):
+
+```bash
+python -m tools.grrr_tool.cli --limit 40 --save-json \
+  --user-agent "Your Name you@example.com"
+```
+
+Key flags:
+
+- `--limit`: number of recent filings to inspect (defaults to 100).
+- `--save-json`: also writes the filing metadata to `data/grrr_filings.json`.
+- `--download`: grabs the primary filing documents and any referenced press releases for later reading.
+
+Output files are written to the `data/` directory:
+
+```
+data/
+├── grrr_filings.csv
+├── grrr_filings.json          # when --save-json is provided
+├── grrr_earnings_calls.csv
+├── filings/<accession>/...    # when --download is provided
+└── earnings_calls/<accession>/raw.html  # when --download is provided
+```
+
+## 3. Running without SEC access
+
+Some networks block outbound traffic to `https://data.sec.gov`. When live requests fail, the CLI automatically falls back to bundled samples stored in `tools/grrr_tool/samples/`. You will see a warning such as:
+
+```
+Failed to reach SEC (...). Using bundled sample data instead.
+```
+
+This still produces the CSV snapshots so you can explore the downstream workflow offline. To fetch the latest real filings, rerun the command from a network that can reach the SEC after providing an accurate User-Agent string.
+
+## Next steps
+
+The long-form roadmap, design ideas, and future automation milestones live in [`docs/investment-tool-plan.md`](docs/investment-tool-plan.md). Contributions or ideas to extend the pipeline (comparison views, UI experiments, etc.) are welcome—open an issue to discuss.
